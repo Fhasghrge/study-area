@@ -32,6 +32,13 @@ http.get(url, {
     });
     const tips = formatData.filter(item => item.length > 0)
     console.log(tips)
+    const bodys = tips.toString().split(',')
+    let sss = ''
+    for(let i = 0; i < bodys.length; i+=2) {
+      sss += `
+        <li>from ${bodys[i]}to ${bodys[i+1]}</li>
+      `
+    }
     if(tips.length > 0) {
       transporter.sendMail({
         from: '2490300986@qq.com', // sender address
@@ -39,7 +46,10 @@ http.get(url, {
         subject: '有研修室可以抢啦! @_@', // Subject line
         // 发送text或者html格式
         // text: 'Hello world?', // plain text body
-        html: `<b>${tips.toString()}</b>` // html body
+        html: `
+              <h1>有以下时间段可以选择</h1>
+              <ul>${sss}</ul>
+              ` 
       },(error, info) => {
         if (error) {
           return console.log(error);
